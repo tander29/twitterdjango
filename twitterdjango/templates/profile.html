@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Profile</title>
+  </head>
+  <body>
+    <h2>Profile Page</h2>
+    {%if request.user.is_active%} {% include "navigation.html"%} {%endif%}
+    <div>
+      {% if username == null %}
+      <h1>Doesn't seem to be a profile here</h1>
+      {%else %}
+      <div>This profile: {{ username }}</div>
+      <div>Tweet Count: {{ tweet_count }}</div>
+      <div>{{ username }} is following: {{ following_count }} users</div>
+      {%if request.user.is_active and request.user.twitteruser != user %}
+      <div>Are you following {{ username }}?: {{ is_following }}</div>
+
+      <div>
+        <form action="" method="POST">
+          {% csrf_token %}
+          <input type="submit" value="{{ submit_value }}" />
+        </form>
+      </div>
+      {%endif%} {% include "twitterfeed.html"%} {%endif%}
+    </div>
+  </body>
+</html>

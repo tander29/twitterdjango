@@ -13,21 +13,24 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
 from django.contrib import admin
+from django.conf.urls import url
+# from django.urls import path
 from twitterdjango.tweet.models import Tweet
-from twitterdjango.userprofile.models import UserProfile
+from twitterdjango.twitteruser.models import TwitterUser
 from twitterdjango.notification.models import Notification
-
-from django.urls import path
-
-from twitterdjango.userprofile import views as userviews
+from twitterdjango.twitteruser.urls import urlpatterns as twitteruserurls
+from twitterdjango.tweet.urls import urlpatterns as tweeturls
+from twitterdjango.notification.urls import urlpatterns as notificationurls
 
 admin.site.register(Tweet)
-admin.site.register(UserProfile)
+admin.site.register(TwitterUser)
 admin.site.register(Notification)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    path('', userviews.home, name='home')
 ]
+
+urlpatterns += notificationurls
+urlpatterns += twitteruserurls
+urlpatterns += tweeturls

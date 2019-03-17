@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'twitterdjango.notification',
     'twitterdjango.tweet',
-    'twitterdjango.userprofile'
+    'twitterdjango.twitteruser'
 ]
 
 MIDDLEWARE = [
@@ -59,7 +59,7 @@ ROOT_URLCONF = 'twitterdjango.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'twitterdjango/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

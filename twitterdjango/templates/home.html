@@ -4,9 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Twitango</title>
   </head>
   <body>
-    <div>Hello twitterdjango</div>
+    <h1>Twitango</h1>
+    <div>
+      {%if request.user.is_active%} {% include "navigation.html"%}
+      <div>
+        Welcome totally a human named:
+        {{ request.user.twitteruser.username }}
+        <div>You are following: {{ following_count }}</div>
+        <div>Your Tweet Count: {{ tweet_count }}</div>
+        <h3>New tweet:</h3>
+      </div>
+      {% endif %} {% include "genform.html"%} {% include "twitterfeed.html"%}
+    </div>
+
+    {% if request.path == '/login' %}
+    <div>New user? <a href="/register">Register Here</a></div>
+    {% elif request.path == '/register'%}
+    <div>Old User? <a href="login?next=/">Login</a></div>
+    {% endif %}
   </body>
 </html>
