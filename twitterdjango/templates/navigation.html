@@ -3,4 +3,8 @@
   <a href="{% url 'profile' request.user.username%}">Your profile</a>
 </div>
 <div><a href="{% url 'logout' %}">Logout</a></div>
-<div>Notifications is a work in progress</div>
+{%if request.user.is_active%}
+<div>
+  <a href="{% url 'notification' %}"> Notifications ({{ notification }}) </a>
+</div>
+{%endif%}

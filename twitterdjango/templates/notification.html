@@ -7,6 +7,10 @@
     <title>Notification</title>
   </head>
   <body>
-    <div>hello notifications!</div>
+    <h1>Notification</h1>
+    {% include "navigation.html"%} {% if tweets%} {%include 'twitterfeed.html'%}
+    {%else%}
+    <h3>Nothing new</h3>
+    {%endif%}
   </body>
 </html>

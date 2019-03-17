@@ -4,24 +4,16 @@ from .models import User, TwitterUser
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from twitterdjango.tweet.models import Tweet
+from twitterdjango.notification.views import notification_check
+from twitterdjango.notification.views import find_user_notifications
+from twitterdjango.tweet.views import find_following_tweets
 from twitterdjango.tweet.forms import TweetForm
 from django.contrib.auth import logout
-from operator import attrgetter
-import re
-
-
-def find_following_tweets(user_id, following):
-    tweets = Tweet.objects.filter(userprofile=user_id).all()
-    my_tweet_count = len(tweets)
-    for user in following:
-        tweets = tweets | Tweet.objects.filter(userprofile=user.pk).all()
-    return {"tweets": sorted(tweets, key=attrgetter('date_created'),
-                             reverse=True),
-            "tweet_count": my_tweet_count}
 
 
 @login_required(login_url='/login')
 def home(request):
+    """User home page where active_user can tweet and see own+following tweets"""
     user_id = request.user.twitteruser.pk
     follow_list = request.user.twitteruser.following.all()
     tweets = find_following_tweets(user_id, follow_list)
@@ -30,31 +22,23 @@ def home(request):
         form = TweetForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            Tweet.objects.create(
+            this_tweet = Tweet.objects.create(
                 body=data['body'],
                 userprofile=request.user.twitteruser
             )
-            notification_check(data)
+            notification_check(this_tweet)
         return HttpResponseRedirect(reverse('home'))
 
-    return render(request, 'home.html', {"following_count": len(follow_list),
-                                         "tweet_count": tweets['tweet_count'],
-                                         "tweets": tweets['tweets'],
-                                         "form": form})
-
-
-def notification_check(data):
-    notification = re.findall(r"(@\w+)", data['body'])
-    if notification:
-        print("nooooooootttttttiiiification")
-        print(notification)
-        return
-    print("nuthin")
-    print(data['body'])
-    print(notification)
+    page_options = {"following_count": len(follow_list),
+                    "tweet_count": tweets['tweet_count'],
+                    "tweets": tweets['tweets'],
+                    "form": form}
+    page_options.update(find_user_notifications(request))
+    return render(request, 'home.html', page_options)
 
 
 def login_view(request):
+    """Log in view on own page """
     html = 'home.html'
     if request.method == 'POST':
         form = Login(request.POST)
@@ -70,6 +54,7 @@ def login_view(request):
 
 
 def register(request):
+    """Register new user """
     html = 'home.html'
     if request.method == 'POST':
         form = NewUser(request.POST)
@@ -92,6 +77,7 @@ def register(request):
 
 
 def user_info(user):
+    """Return user options declutters view function"""
     page_options = {}
     if user:
         user_tweets = Tweet.objects.filter(userprofile=user.pk)
@@ -106,6 +92,7 @@ def user_info(user):
 
 
 def profile_view(request, username):
+    """See a users profile"""
     html = 'profile.html'
     user_exist = TwitterUser.objects.filter(username=username).first()
     page_options = {}
@@ -121,6 +108,8 @@ def profile_view(request, username):
 
     if user_exist:
         page_options.update(user_info(user_exist))
+        if request.user.is_active:
+            page_options.update(find_user_notifications(request))
         return render(request, html, page_options)
     else:
         return render(request, html)
@@ -130,7 +119,6 @@ def follow_toggle(request, otheruser):
     """Toggle options for following used in Profile View """
 
     logged_in_user = request.user.twitteruser
-
     if otheruser not in logged_in_user.following.all():
         is_following = False
         submit_value = "Follow"
@@ -145,5 +133,6 @@ def follow_toggle(request, otheruser):
 
 
 def logout_view(request):
+    """Log Out"""
     logout(request)
     return HttpResponseRedirect(reverse('home'))
