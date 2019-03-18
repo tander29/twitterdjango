@@ -22,6 +22,8 @@ from twitterdjango.notification.models import Notification
 from twitterdjango.twitteruser.urls import urlpatterns as twitteruserurls
 from twitterdjango.tweet.urls import urlpatterns as tweeturls
 from twitterdjango.notification.urls import urlpatterns as notificationurls
+from django.conf import settings
+from django.conf.urls.static import static
 
 admin.site.register(Tweet)
 admin.site.register(TwitterUser)
@@ -34,3 +36,10 @@ urlpatterns = [
 urlpatterns += notificationurls
 urlpatterns += twitteruserurls
 urlpatterns += tweeturls
+
+
+# if settings.DEBUG:
+#     urlpatterns += static(settings.STATIC_URL,
+#                           document_root=settings.STATIC_ROOT)
+# urlpatterns += static(settings.MEDIA_URL,
+#                       document_root=settings.MEDIA_ROOT)

@@ -1,10 +1,18 @@
-<div><a href="{% url 'home' %}">Home to Tweet</a></div>
 <div>
-  <a href="{% url 'profile' request.user.username%}">Your profile</a>
+  <a href="{% url 'home' %}"><button>Home to Tweet</button></a>
 </div>
-<div><a href="{% url 'logout' %}">Logout</a></div>
+<div>
+  <a href="{% url 'profile' request.user.username%}">
+    <button>Your profile</button></a
+  >
+</div>
+<div>
+  <a href="{% url 'logout' %}"><button>Logout</button></a>
+</div>
 {%if request.user.is_active%}
 <div>
-  <a href="{% url 'notification' %}"> Notifications ({{ notification }}) </a>
+  <a href="{% url 'notification' %}">
+    <button>Notifications ({{ notification }})</button>
+  </a>
 </div>
 {%endif%}

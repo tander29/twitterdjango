@@ -40,16 +40,17 @@ def home(request):
 def login_view(request):
     """Log in view on own page """
     html = 'home.html'
+    form = Login()
     if request.method == 'POST':
         form = Login(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             user = authenticate(
                 username=data['username'], password=data['password'])
-            if user is not None:
-                login(request, user)
-                return HttpResponseRedirect(request.GET.get('next', '/'))
-    form = Login()
+
+        if user:
+            login(request, user)
+            return HttpResponseRedirect(request.GET.get('next', '/'))
     return render(request, html, {"form": form})
 
 
