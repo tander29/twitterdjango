@@ -7,9 +7,16 @@
     <title>Twitango</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+      integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <h1>Twitango</h1>
+
     <div>
       {%if request.user.is_active%} {% include "navigation.html"%}
       <div>
@@ -19,8 +26,10 @@
         <div>Your Tweet Count: {{ tweet_count }}</div>
         <h3>New tweet:</h3>
       </div>
-      {% endif %} {% include "genform.html"%} {%if request.user.is_active%}
-      {%include "twitterfeed.html"%} {%endif%}
+      <div>
+        {% endif %} {% include "genform.html"%} {%if request.user.is_active%}
+        {%include "twitterfeed.html"%} {%endif%}
+      </div>
     </div>
 
     {% if request.path == '/login' %}

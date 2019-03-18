@@ -1,18 +1,27 @@
-<div>
-  <a href="{% url 'home' %}"><button>Home to Tweet</button></a>
+<div class="pure-g">
+  <div class="pure-u-1-4">
+    <a href="{% url 'home' %}"
+      ><button class="pure-button pure-button-primary">Home to Tweet</button></a
+    >
+  </div>
+  <div class="pure-u-1-4">
+    <a href="{% url 'profile' request.user.username%}">
+      <button class=" pure-button pure-button-primary">Your profile</button></a
+    >
+  </div>
+
+  {%if request.user.is_active%}
+  <div class="pure-u-1-4">
+    <a href="{% url 'notification' %}">
+      <button class="pure-button pure-button-primary">
+        Notifications ({{ notification }})
+      </button>
+    </a>
+  </div>
+  {%endif%}
+  <div class="pure-u-1-4 ">
+    <a href="{% url 'logout' %}"
+      ><button class="pure-button pure-button-primary">Logout</button></a
+    >
+  </div>
 </div>
-<div>
-  <a href="{% url 'profile' request.user.username%}">
-    <button>Your profile</button></a
-  >
-</div>
-<div>
-  <a href="{% url 'logout' %}"><button>Logout</button></a>
-</div>
-{%if request.user.is_active%}
-<div>
-  <a href="{% url 'notification' %}">
-    <button>Notifications ({{ notification }})</button>
-  </a>
-</div>
-{%endif%}

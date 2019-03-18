@@ -5,3 +5,11 @@ div {
 h1 {
   color: gray;
 }
+
+.button-success {
+  background: rgb(28, 184, 65); /* this is a green */
+}
+
+.button-warning {
+  background: rgb(223, 117, 20); /* this is an orange */
+}
