@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Notification</title>
+    <title>Document</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
     <link
@@ -15,12 +15,9 @@
     />
   </head>
   <body>
-    <h1>Notification</h1>
-
-    <div>{% include "navigation.html"%}</div>
+    <h1>Tweet it out</h1>
+    <div>{%include "navigation.html"%}</div>
     <div>{%include "profilecard.html"%}</div>
-    {% if tweets%} {%include 'twitterfeed.html'%} {%else%}
-    <h3>Nothing new</h3>
-    {%endif%}
+    <div>{%include "genform.html"%}</div>
   </body>
 </html>

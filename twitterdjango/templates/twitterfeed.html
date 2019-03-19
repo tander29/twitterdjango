@@ -1,18 +1,22 @@
-<h1>Tweet Feed:</h1>
-{%for tweet in tweets%}
-<div>---------------------------</div>
-<div>
-  username:
-  <a href="{% url 'profile' tweet.userprofile.username %}">
-    {{ tweet.userprofile.username }}
-  </a>
+<h2>Tweet Feed:</h2>
+<div class="pure-menu pure-menu-scrollable">
+  {%for tweet in tweets%}
+  <div>
+    <div>---------------------------</div>
+    <div>
+      username:
+      <a href="{% url 'profile' tweet.userprofile.username %}">
+        {{ tweet.userprofile.username }}
+      </a>
+    </div>
+    <div>
+      <a href="{%url 'tweetid' tweet.pk%}">{{ tweet.date_created }} </a>
+    </div>
+    <div>{{ tweet.body }}</div>
+    <div>{{ request.path.root }}</div>
+    <div>---------------------------</div>
+    {%endfor%} {%if not tweets%}
+  </div>
+  <h3>No tweets found</h3>
+  {%endif%}
 </div>
-<div>
-  <a href="{%url 'tweetid' tweet.pk%}">{{ tweet.date_created }} </a>
-</div>
-<div>{{ tweet.body }}</div>
-<div>{{ request.path.root }}</div>
-<div>---------------------------</div>
-{%endfor%} {%if not tweets%}
-<h3>No tweets found</h3>
-{%endif%}

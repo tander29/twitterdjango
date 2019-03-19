@@ -18,17 +18,16 @@
     <h1>Twitango</h1>
 
     <div>
-      {%if request.user.is_active%} {% include "navigation.html"%}
+      {% include "navigation.html"%}
       <div>
         Welcome totally a human named:
         {{ request.user.twitteruser.username }}
         <div>You are following: {{ following_count }}</div>
         <div>Your Tweet Count: {{ tweet_count }}</div>
-        <h3>New tweet:</h3>
+        <h3>Follow People to see more tweets in your feed!</h3>
       </div>
       <div>
-        {% endif %} {% include "genform.html"%} {%if request.user.is_active%}
-        {%include "twitterfeed.html"%} {%endif%}
+        {%include "twitterfeed.html"%}
       </div>
     </div>
 

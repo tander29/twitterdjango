@@ -7,3 +7,5 @@ class Tweet(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, blank=True)
     userprofile = models.ForeignKey(
         TwitterUser, on_delete=models.CASCADE)
+
+

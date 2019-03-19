@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from twitterdjango.twitteruser.models import TwitterUser
 from .models import Notification
 import re
+from twitterdjango.twitteruser.helpers import user_info
 
 
 @login_required(login_url='../login')
@@ -15,8 +16,10 @@ def notification(request):
         if not notice.has_seen:
             tweets += [notice.tweet]
             Notification.objects.filter(pk=notice.pk).update(has_seen=True)
-    page_options = {"tweets": tweets}
+    page_options.update(user_info(request.user.twitteruser))
+    page_options.update({"tweets": tweets})
     page_options.update(find_user_notifications(request))
+    print(page_options)
     return render(request, html, page_options)
 
 

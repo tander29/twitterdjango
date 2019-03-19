@@ -34,8 +34,8 @@ urlpatterns = [
 ]
 
 urlpatterns += notificationurls
-urlpatterns += twitteruserurls
 urlpatterns += tweeturls
+urlpatterns += twitteruserurls
 
 
 # if settings.DEBUG:
