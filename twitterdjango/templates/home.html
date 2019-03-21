@@ -17,6 +17,7 @@
   <body>
     <h1>Twitango</h1>
 
+    {% if request.user.is_active%}
     <div>
       {% include "navigation.html"%}
       <div>
@@ -30,10 +31,9 @@
         {%include "twitterfeed.html"%}
       </div>
     </div>
-
-    {% if request.path == '/login' %}
+    {%endif%} {% if request.path == '/login' %} {%include "genform.html" %}
     <div>New user? <a href="/register">Register Here</a></div>
-    {% elif request.path == '/register'%}
+    {% elif request.path == '/register'%} {%include "genform.html" %}
     <div>Old User? <a href="login?next=/">Login</a></div>
     {% endif %}
   </body>

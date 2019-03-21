@@ -5,13 +5,13 @@
       ><button class="pure-button pure-button-primary">Home</button></a>
     
     </div>
-   
+    {%if request.user.is_active%}
     <div class="pure-u-1-5">
       <a href="{% url 'tweet' %}"
         ><button class="pure-button pure-button-primary">Go Tweet</button></a
       >
     </div>
-    
+   
     <div class="pure-u-1-5">
       <a href="{% url 'profile' request.user.username%}">
         <button class=" pure-button pure-button-primary">
@@ -20,7 +20,7 @@
       >
     </div>
 
-    {%if request.user.is_active%}
+    
     <div class="pure-u-1-5">
       <a href="{% url 'notification' %}">
         <button class="pure-button pure-button-primary">
@@ -28,11 +28,12 @@
         </button>
       </a>
     </div>
-    {%endif%}
+    
     <div class="pure-u-1-5">
       <a href="{% url 'logout' %}"
         ><button class="pure-button pure-button-primary">Logout</button></a
       >
     </div>
+    {%endif%}
   </div>
 </div>
